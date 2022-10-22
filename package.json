@@ -2,7 +2,7 @@
     "name": "grmtools-syntax",
     "displayName": "grmtools syntax",
     "description": "grmtools syntax highligting",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "engines": {
         "vscode": "^1.72.0"
     },
