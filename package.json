@@ -1,0 +1,68 @@
+{
+    "name": "grmtools-syntax",
+    "displayName": "grmtools syntax",
+    "description": "grmtools syntax highligting",
+    "version": "0.1.0",
+    "engines": {
+        "vscode": "^1.72.0"
+    },
+    "license": "MIT",
+    "publisher": "tamuratak",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tamuratak/grmtools-syntax.git"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "lrlex",
+                "aliases": [
+                    "grmtools (.l)"
+                ],
+                "extensions": [
+                    ".l"
+                ],
+                "configuration": "./lex-configuration.json"
+            },
+            {
+                "id": "lrpar",
+                "aliases": [
+                    "grmtools (.y)"
+                ],
+                "extensions": [
+                    ".y"
+                ],
+                "configuration": "./yacc-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "path": "./syntaxes/dollars.injection.json",
+                "scopeName": "dollars.injection",
+                "injectTo": [
+                    "source.y"
+                ]
+            },
+            {
+                "language": "lrlex",
+                "scopeName": "source.l",
+                "path": "./syntaxes/lex.tmLanguage.json",
+                "embeddedLanguages": {
+                    "entity.block.lex": "cpp"
+                }
+            },
+            {
+                "language": "lrpar",
+                "scopeName": "source.y",
+                "path": "./syntaxes/yacc.tmLanguage.json",
+                "embeddedLanguages": {
+                    "entity.prologue.yacc": "cpp",
+                    "entity.action.yacc": "cpp"
+                }
+            }
+        ]
+    }
+}

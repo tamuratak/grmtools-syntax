@@ -1,0 +1,366 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Yacc",
+	"patterns": [
+		{
+			"include": "#declarations"
+		},
+		{
+			"include": "#rules"
+		},
+		{
+			"include": "#epilogue"
+		}
+	],
+	"repository": {
+		"declarations": {
+			"name": "entity.declarations.yacc",
+			"patterns": [
+				{
+					"include": "#prologue"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#result-type"
+				},
+				{
+					"include": "#keywords"
+				},
+				{
+					"include": "#keywords-block"
+				},
+				{
+					"include": "#define"
+				}
+			]
+		},
+		"rules": {
+			"name": "entity.rules.yacc",
+			"begin": "%%",
+			"end": "%%",
+			"beginCaptures": {
+				"0": {
+					"name": "markup.bold.yacc"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "markup.bold.yacc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#results"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#character"
+				},
+				{
+					"include": "#nonterminalExtension"
+				},
+				{
+					"include": "#variables"
+				},
+				{
+					"name": "keyword.operator.yacc",
+					"match": "[\\|:;]"
+				},
+				{
+					"name": "keyword.other.yacc",
+					"match": "%(empty|prec)"
+				},
+				{
+					"name": "entity.action.yacc",
+					"begin": "{",
+					"end": "}",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.paren.open"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.paren.close"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				}
+			]
+		},
+		"epilogue": {
+			"name": "entity.epilogue.yacc",
+			"patterns": [
+				{
+					"include": "#embedded"
+				}
+			]
+		},
+		"keywords": {
+			"begin": "^%(option|token-table|token(?=(\\s|<))|expect-rr|expect|nonassoc(?=\\s)|left(?=\\s)|right(?=\\s)|defines|output|precedence|nterm|start|name-prefix|locations|skeleton|glr-parser|language|pure-parser|debug|file-prefix|header|no-lines|require|verbose|yacc)",
+			"end": "(?=%)",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.other.yacc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#number"
+				},
+				{
+					"include": "#variables"
+				},
+				{
+					"include": "#types"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#character"
+				}
+			]
+		},
+		"result-type": {
+			"begin": "^%type(?=(\\s|<))",
+			"end": "(?=%)",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.other.yacc"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#types"
+				},
+				{
+					"name": "support.class.yacc",
+					"match": "[a-zA-Z_]+[\\w\\.]*"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#comment"
+				}
+			]
+		},
+		"define": {
+			"begin": "^%define",
+			"end": "$",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.other.yacc"
+				}
+			},
+			"patterns": [
+				{
+					"name": "variable.parameter.yacc",
+					"match": "[a-zA-Z_\\.]+(?=\\s)"
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#comment"
+				},
+				{
+					"begin": "{",
+					"end": "}",
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				}
+			]
+		},
+		"keywords-block": {
+			"begin": "^%(destructor|union|code( (requires|provides|top|imports))?|printer|parse-param|lex-param)",
+			"end": "$",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.other.yacc"
+				}
+			},
+			"patterns": [
+				{
+					"name": "entity.action.yacc",
+					"begin": "{",
+					"end": "}",
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				},
+				{
+					"include": "#variables"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#comment"
+				}
+			]
+		},
+		"prologue": {
+			"patterns": [
+				{
+					"name": "entity.prologue.yacc",
+					"begin": "%{",
+					"end": "%}",
+					"beginCaptures": {
+						"0": {
+							"name": "markup.inserted.yacc"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "markup.inserted.yacc"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				},
+				{
+					"name": "entity.prologue.yacc",
+					"begin": "%(top){",
+					"end": "}",
+					"beginCaptures": {
+						"0": {
+							"name": "markup.inserted.yacc"
+						},
+						"1": {
+							"name": "variable.parameter.yacc"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "markup.inserted.yacc"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				}
+			]
+		},
+		"number": {
+			"patterns": [
+				{
+					"name": "constant.numeric.yacc",
+					"match": "[0-9]+(x[0-9]+)?(?=\\s)"
+				}
+			]
+		},
+		"types": {
+			"match": "<([a-zA-Z_*\b]+)>",
+			"captures": {
+				"1": {
+					"name": "constant.numeric.yacc"
+				}
+			}
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable.parameter.yacc",
+					"match": "[a-zA-Z_]+[\\w\\.]*"
+				}
+			]
+		},
+		"nonterminalExtension": {
+			"begin": "(?<=\\w)\\[",
+			"end": "\\]",
+			"patterns": [
+				{
+					"name": "keyword.variables.yacc",
+					"match": "[a-zA-Z_]+[\\w\\.]*"
+				}
+			]
+		},
+		"results": {
+			"patterns": [
+				{
+					"name": "support.class.yacc",
+					"match": "^[a-zA-Z_]+[\\w\\.-]*(?=[\\s:\\[])"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.yacc",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.yacc",
+					"match": "\\\\."
+				}
+			]
+		},
+		"character": {
+			"patterns": [
+				{
+					"name": "string.quoted.single.yacc",
+					"match": "'(\\\\)?.'"
+				},
+				{
+					"name": "string.quoted.single.yacc",
+					"match": "\"(\\\\)?.\""
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.block.yacc",
+			"begin": "/\\*",
+			"end": "\\*/"
+		},
+		"comment": {
+			"name": "comment.single.yacc",
+			"begin": "//",
+			"end": "$"
+		},
+		"embedded": {
+			"patterns": [
+				{
+					"include": "source.cpp"
+				},
+				{
+					"include": "source.c"
+				}
+			]
+		}
+	},
+	"scopeName": "source.y"
+}

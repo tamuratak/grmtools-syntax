@@ -1,0 +1,324 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Lex",
+	"patterns": [
+		{
+			"include": "#subroutine"
+		},
+		{
+			"include": "#rules"
+		},
+		{
+			"include": "#definition"
+		}
+	],
+	"repository": {
+		"definition": {
+			"name":"entity.declaration.lex",
+			"begin": "",
+			"end": "(?=%%)",
+			"patterns": [
+				{
+					"include": "#block"
+				},
+				{
+					"include": "#directives"
+				},
+				{
+					"include": "#states"
+				},
+				{
+					"include": "#defines"
+				},
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#strings"
+				}
+			]
+		},
+		"rules": {
+			"patterns": [
+				{	
+					"name": "entity.rules.lex",
+					"begin": "%%",
+					"end": "%%",
+					"beginCaptures": {
+						"0": {
+							"name": "markup.bold.lex"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "markup.bold.lex"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#brackets"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#block"
+						},
+						{
+							"include": "#predefined"
+						},
+						{
+							"include": "#user-define"
+						},
+						{
+							"include": "#symbols"
+						},
+						{
+							"include": "#startcondition_block"
+						},
+						{
+							"name": "constant.numeric.lex",
+							"match": "<[a-zA-Z0-9_,]+>"
+						},
+						{
+							"name": "entity.block.lex",
+							"begin": "(?<=[^\\\\]|^){",
+							"end": "(?<=[^\\\\]|^)}",
+							"patterns": [
+								{
+									"include": "#embedded"
+								}
+							]
+						},
+						{
+							"name": "entity.name.function.lex",
+							"match": "."
+						}
+					]
+				}
+			]
+		},
+		"subroutine": {
+			"name":"entity.subroutine.lex",
+			"begin": "(?<=%%)",
+			"end": "",
+			"patterns": [
+				{
+					"include": "#embedded"
+				}
+			]
+		},
+		"block": {
+			"patterns": [
+				{
+					"name": "entity.block.lex",
+					"begin": "%{",
+					"end": "%}",
+					"beginCaptures": {
+						"0": {
+							"name": "markup.inserted.lex"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "markup.inserted.lex"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				},
+				{
+					"name": "entity.block.lex",
+					"begin": "%(top){",
+					"end": "}",
+					"beginCaptures": {
+						"0": {
+							"name": "markup.inserted.lex"
+						},
+						"1": {
+							"name": "variable.parameter.lex"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "markup.inserted.lex"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#embedded"
+						}
+					]
+				}
+			]
+		},
+		"directives": {
+			"begin": "^%(array|pointer|option)",
+			"end": "$",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.other.lex"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#strings"
+				},
+				{
+					"name": "variable.parameter",
+					"match": "[a-zA-Z0-9-]+"
+				}
+			]
+		},
+		"startcondition_block": {
+				"name": "entity.startcondition.lex",
+				"begin": "<[a-zA-Z0-9_,]+>[ ]*{(?=$)",
+				"end": "^}",
+				"beginCaptures": {
+					"0": {
+						"name": "constant.numeric.lex"
+					}
+				},
+				"endCaptures": {
+					"0": {
+						"name": "constant.numeric.lex"
+					}
+				},
+				"patterns": [
+					{
+						"include": "#comments"
+					},
+					{
+						"include": "#strings"
+					},
+					{
+						"include": "#block"
+					},
+					{
+						"include": "#predefined"
+					},
+					{
+						"include": "#user-define"
+					},
+					{
+						"include": "#symbols"
+					},
+					{
+						"include": "#startcondition_block"
+					},
+					{
+						"name": "constant.numeric.lex",
+						"match": "<[a-zA-Z0-9_,]+>"
+					},
+					{
+						"name": "string.unquoted",
+						"match": "^.*(?={)"
+					},
+					{
+						"begin": "(?<=[^\\\\]|^){",
+						"end": "(?<=[^\\\\]|^)}",
+						"patterns": [
+							{
+								"include": "#embedded"
+							}
+						]
+					},
+					{
+						"name": "entity.name.function.lex",
+						"match": "."
+					}
+				]
+		},
+		"states": {
+			"begin": "^%(state|[sx])",
+			"end": "$",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.other.lex"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"name": "constant.numeric.lex",
+					"match": "."
+				}
+			]
+		},
+		"defines": {
+			"begin": "^[a-zA-Z0-9_]+",
+			"end": "$",
+			"beginCaptures": {
+				"0": {
+					"name": "support.class.lex"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#user-define"
+				},
+				{
+					"include": "#symbols"
+				},
+				{
+					"name": "entity.name.function.lex",
+					"match": "."
+				}
+			]
+		},
+		"user-define": {
+			"match": "(?<=[^\\\\]|^){([a-zA-Z]\\w*)(?<=[^\\\\])}",
+			"captures": {
+				"0": {
+					"name": "entity.name.function"
+				},
+				"1": {
+					"name": "support.class.lex"
+				}
+			}
+		},
+		"brackets": {
+			"name":"entity.name.function.lex",
+			"match": "(?<=[^\\\\]|^)\\[(?:[^\\[\\]]|\\\\.)*\\]"
+		},
+		"strings": {
+			"name": "string.quoted.double.lex",
+			"match": "(?<=[^\\\\]|^)\"(?:[^\"\\\\]|\\\\.)*\""
+		},
+		"predefined": {
+			"name": "keyword.lex",
+			"match": "(<<EOF>>)"
+		},
+		"symbols": {
+			"name": "keyword.lex",
+			"match": "[\\|;]"
+		},
+		"embedded": {
+			"patterns": [
+				{
+					"include": "source.cpp"
+				},
+				{
+					"include": "source.c"
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.block.yacc",
+			"begin": "/\\*",
+			"end": "\\*/"
+		}
+	},
+	"scopeName": "source.l"
+}
