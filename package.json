@@ -64,5 +64,11 @@
                 }
             }
         ]
+    },
+    "scripts": {
+        "release": "vsce package"
+      },
+    "devDependencies": {
+        "vsce": "2.11.0"
     }
 }
