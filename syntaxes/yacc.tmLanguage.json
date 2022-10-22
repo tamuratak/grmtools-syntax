@@ -67,6 +67,9 @@
 					"include": "#character"
 				},
 				{
+					"include": "#strings"
+				},
+				{
 					"include": "#nonterminalExtension"
 				},
 				{
@@ -83,7 +86,7 @@
 				{
 					"name": "entity.action.yacc",
 					"begin": "{",
-					"end": "}",
+					"end": "}(?=\\n)",
 					"beginCaptures": {
 						"0": {
 							"name": "punctuation.paren.open"
@@ -334,10 +337,6 @@
 				{
 					"name": "string.quoted.single.yacc",
 					"match": "'(\\\\)?.'"
-				},
-				{
-					"name": "string.quoted.single.yacc",
-					"match": "\"(\\\\)?.\""
 				}
 			]
 		},
