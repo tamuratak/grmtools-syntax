@@ -51,7 +51,7 @@
                 "scopeName": "source.l",
                 "path": "./syntaxes/lex.tmLanguage.json",
                 "embeddedLanguages": {
-                    "entity.block.lex": "cpp"
+                    "entity.block.lex": "rust"
                 }
             },
             {
