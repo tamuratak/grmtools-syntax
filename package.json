@@ -59,8 +59,8 @@
                 "scopeName": "source.y",
                 "path": "./syntaxes/yacc.tmLanguage.json",
                 "embeddedLanguages": {
-                    "entity.prologue.yacc": "cpp",
-                    "entity.action.yacc": "cpp"
+                    "entity.prologue.yacc": "rust",
+                    "entity.action.yacc": "rust"
                 }
             }
         ]

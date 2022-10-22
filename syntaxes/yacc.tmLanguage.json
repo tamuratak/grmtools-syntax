@@ -354,10 +354,7 @@
 		"embedded": {
 			"patterns": [
 				{
-					"include": "source.cpp"
-				},
-				{
-					"include": "source.c"
+					"include": "source.rust"
 				}
 			]
 		}
